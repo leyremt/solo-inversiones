@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOLO INVERSIONES · Seguimiento</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330;
+    --border:rgba(94,231,215,.22);
+    --border-pink:rgba(247,182,210,.35);
+    --text:#e6edf3; --muted:#8b949e;
+    --turquoise:#5ee7d7; --pink:#f7b6d2;
+    --accent:#5ee7d7; --accent2:#f7b6d2;
+    --green:#3fb950; --red:#f85149; --chip:#1b2230; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px;}
+  header.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:6px;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .logo{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,var(--turquoise),var(--pink));
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:#0d1117;}
+  h1{font-size:21px;margin:0;letter-spacing:.3px;}
+  .sub{color:var(--muted);font-size:13px;margin-top:2px;}
+  .banner{background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius);
+    padding:13px 16px;font-size:13px;color:var(--muted);margin:18px 0 22px;}
+  .banner b{color:var(--text);}
+  .stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px;}
+  .stat{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+    padding:12px 16px;flex:1;min-width:130px;border-left:3px solid var(--pink);}
+  .stat .n{font-size:24px;font-weight:700;color:var(--turquoise);}
+  .stat .l{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px;}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+  #search{flex:1;min-width:200px;background:var(--panel);border:1px solid var(--border);color:var(--text);
+    padding:11px 14px;border-radius:10px;font-size:14px;}
+  #search:focus{outline:none;border-color:var(--accent2);}
+  .filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px;}
+  .filter{background:var(--chip);border:1px solid var(--border);color:var(--muted);
+    padding:7px 12px;border-radius:999px;font-size:12.5px;cursor:pointer;white-space:nowrap;transition:.15s;}
+  .filter:hover{color:var(--text);}
+  .filter.active{background:var(--accent2);border-color:var(--accent2);color:#0d1117;font-weight:600;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+    padding:16px;display:flex;flex-direction:column;gap:10px;transition:.15s;border-top:2px solid var(--turquoise);}
+  .card:hover{border-color:var(--pink);border-top-color:var(--pink);transform:translateY(-2px);
+    box-shadow:0 6px 22px rgba(94,231,215,.12);}
+  .card .row1{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .tk{font-weight:800;font-size:17px;letter-spacing:.5px;}
+  .ex{color:var(--muted);font-size:11px;}
+  .name{font-size:13.5px;color:var(--text);}
+  .new{display:inline-block;margin-left:6px;background:var(--pink);color:#0d1117;font-size:9.5px;
+    font-weight:700;padding:1px 6px;border-radius:999px;vertical-align:middle;}
+  .price{text-align:right;}
+  .price .v{font-weight:700;font-size:16px;}
+  .price .c{font-size:12px;}
+  .up{color:var(--green);} .down{color:var(--red);} .flat{color:var(--muted);}
+  .theme{display:inline-block;background:var(--chip);border:1px solid var(--border);
+    color:var(--turquoise);font-size:11px;padding:3px 9px;border-radius:999px;width:fit-content;}
+  .ctx{font-size:12.5px;color:var(--muted);border-top:1px solid var(--border-pink);padding-top:9px;}
+  .ctx .who{color:var(--pink);font-weight:600;}
+  .links{display:flex;gap:8px;margin-top:2px;}
+  .links a{font-size:12px;color:var(--accent2);text-decoration:none;background:var(--chip);
+    border:1px solid var(--border);padding:5px 10px;border-radius:8px;}
+  .links a:hover{border-color:var(--accent2);}
+  footer{margin-top:38px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);padding-top:18px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">SI</div>
+      <div>
+        <h1>SOLO INVERSIONES</h1>
+        <div class="sub">Empresas mencionadas en el grupo · lista actualizada <span id="dataupd">…</span> · precios <span id="upd">cargando…</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="banner">
+    Esta lista se actualiza <b>sola cada día</b> a partir del grupo de Telegram. Los precios se
+    descargan en vivo al abrir la página. La etiqueta <span class="new">NUEVA</span> marca empresas
+    detectadas en los últimos días.
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="n" id="s-total">–</div><div class="l">Empresas</div></div>
+    <div class="stat"><div class="n" id="s-themes">–</div><div class="l">Temáticas</div></div>
+    <div class="stat"><div class="n" id="s-up">–</div><div class="l">Suben hoy</div></div>
+    <div class="stat"><div class="n" id="s-down">–</div><div class="l">Bajan hoy</div></div>
+  </div>
+
+  <div class="controls">
+    <input id="search" type="text" placeholder="Buscar por nombre, ticker o temática…">
+  </div>
+  <div class="filters" id="filters"></div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    Datos del grupo «SOLO INVERSIONES». Precios vía Finnhub (~15 min de retardo según mercado).
+    Prysmian y Cosmo Pharmaceuticals se siguen vía su ADR/OTC en USD.
+  </footer>
+</div>
+
+<script>
+const FINNHUB_KEY = "d8iqb41r01qtcvnt6tt0d8iqb41r01qtcvnt6ttg";
+
+let companies = [];
+let themes = [];
+let activeTheme = "Todas";
+let query = "";
+let quotes = {};
+
+const grid = document.getElementById('grid');
+const fbox = document.getElementById('filters');
+document.getElementById('search').addEventListener('input',e=>{query=e.target.value.toLowerCase();render();});
+
+/* ---- cargar la lista generada por el motor ---- */
+async function loadData(){
+  try{
+    const r = await fetch('companies.json?_='+Date.now());
+    const db = await r.json();
+    companies = Object.values(db.companies);
+    document.getElementById('dataupd').textContent = db.updated || '';
+  }catch(e){
+    grid.innerHTML='<p style="color:var(--muted)">No se pudo cargar la lista de empresas.</p>';
+    return;
+  }
+  themes = [...new Set(companies.map(c=>c.theme))];
+  document.getElementById('s-total').textContent = companies.length;
+  document.getElementById('s-themes').textContent = themes.length;
+  buildFilters();
+  render();
+  loadPrices();
+}
+
+function buildFilters(){
+  fbox.innerHTML='';
+  ["Todas",...themes].forEach(t=>{
+    const b=document.createElement('div');
+    b.className='filter'+(t===activeTheme?' active':'');
+    b.textContent=t;
+    b.onclick=()=>{activeTheme=t;[...fbox.children].forEach(x=>x.classList.remove('active'));b.classList.add('active');render();};
+    fbox.appendChild(b);
+  });
+}
+
+function isNew(c){
+  if(!c.first_seen) return false;
+  const d=(Date.now()-new Date(c.first_seen))/86400000;
+  return d>=0 && d<=7 && c.source==='telegram';
+}
+function priceHtml(c){
+  const q=quotes[c.ticker];
+  if(!q) return `<div class="v flat">—</div><div class="c flat">sin datos</div>`;
+  const cls=q.dp>0.04?'up':(q.dp<-0.04?'down':'flat');
+  const sign=q.dp>0?'+':'';
+  return `<div class="v">$${q.c.toFixed(2)}</div><div class="c ${cls}">${sign}${q.dp.toFixed(2)}% hoy</div>`;
+}
+function card(c){
+  const tvUrl=`https://www.tradingview.com/symbols/${(c.ticker||'').replace('.','-')}/`;
+  const newsUrl=`https://news.google.com/search?q=${encodeURIComponent((c.name||'')+' stock')}&hl=es`;
+  return `<div class="card">
+    <div class="row1">
+      <div><div class="tk">${c.ticker}</div><div class="ex">${c.exchange||''}</div></div>
+      <div class="price">${priceHtml(c)}</div>
+    </div>
+    <div class="name">${c.name||''}${isNew(c)?'<span class="new">NUEVA</span>':''}</div>
+    <div class="theme">${c.theme||'Otros'}</div>
+    <div class="ctx"><span class="who">${c.who||'grupo'}:</span> ${c.ctx||''}</div>
+    <div class="links">
+      <a href="${tvUrl}" target="_blank" rel="noopener">📈 Gráfico</a>
+      <a href="${newsUrl}" target="_blank" rel="noopener">📰 Noticias</a>
+    </div>
+  </div>`;
+}
+function render(){
+  const list=companies.filter(c=>{
+    const okT=activeTheme==="Todas"||c.theme===activeTheme;
+    const okQ=!query||((c.name||'')+(c.ticker||'')+(c.theme||'')).toLowerCase().includes(query);
+    return okT&&okQ;
+  }).sort((a,b)=>(isNew(b)-isNew(a)));
+  grid.innerHTML=list.map(card).join('')||'<p style="color:var(--muted)">Sin resultados.</p>';
+}
+
+/* ---- precios en vivo ---- */
+function updateStats(){
+  let up=0,down=0;
+  Object.values(quotes).forEach(q=>{if(q.dp>0)up++;else if(q.dp<0)down++;});
+  document.getElementById('s-up').textContent=up||'–';
+  document.getElementById('s-down').textContent=down||'–';
+}
+async function loadPrices(){
+  if(!FINNHUB_KEY){document.getElementById('upd').textContent='sin conectar';return;}
+  document.getElementById('upd').textContent='actualizando…';
+  await Promise.all(companies.map(async c=>{
+    try{
+      const sym=c.fh||c.ticker;
+      const r=await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(sym)}&token=${FINNHUB_KEY}`);
+      const d=await r.json();
+      if(d&&typeof d.c==='number'&&d.c>0) quotes[c.ticker]={c:d.c,dp:(typeof d.dp==='number'?d.dp:0)};
+    }catch(e){}
+  }));
+  render(); updateStats();
+  document.getElementById('upd').textContent='actualizados '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+}
+
+loadData();
+</script>
+</body>
+</html>
