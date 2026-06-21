@@ -8,9 +8,9 @@ SOLO INVERSIONES - Motor diario.
 4. Guarda el estado (offset) para no repetir mensajes.
 
 Variables de entorno necesarias:
-  TELEGRAM_TOKEN   token del bot de @BotFather
-  OPENAI_API_KEY   key de platform.openai.com
-  FINNHUB_KEY      (opcional) para validar tickers; si falta, se omite la validación
+  TELEGRAM_TOKEN     token del bot de @BotFather
+  ANTHROPIC_API_KEY  key de console.anthropic.com
+  FINNHUB_KEY        (opcional) para validar tickers; si falta, se omite la validación
 
 El commit/push de los cambios lo hace el workflow de GitHub Actions.
 """
@@ -22,13 +22,13 @@ CHAT_ID = -1004388607461            # grupo "SOLO INVERSIONES"
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(ROOT, "companies.json")
 STATE = os.path.join(ROOT, "state.json")
-OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
 THEMES = ["IA / Semis","Quantum","Espacio","Nuclear","Fintech",
           "Dividendos / REITs","Defensivas","Big Tech / Holdings",
           "Salud / Biotech","Infraestructura","Otros"]
 
 TG_TOKEN = os.environ.get("TELEGRAM_TOKEN", "").strip()
-OPENAI_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
+ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "").strip()
 FINNHUB_KEY = os.environ.get("FINNHUB_KEY", "").strip()
 TODAY = datetime.date.today().isoformat()
 
@@ -62,7 +62,7 @@ def get_new_messages(offset):
     return msgs, new_offset
 
 
-# ---------- Extracción con OpenAI ----------
+# ---------- Extracción con Claude ----------
 def extract_companies(messages):
     if not messages:
         return []
@@ -75,32 +75,32 @@ Para cada empresa devuelve su ticker bursátil real (prefiere el listado en EE. 
 cotiza en Europa, da el símbolo del ADR/OTC en EE. UU. si existe).
 Clasifícala en una de estas temáticas EXACTAS: {THEMES}.
 
-Devuelve un objeto JSON con una clave "companies" que sea un array, así:
-{{"companies":[{{"name":"NVIDIA","ticker":"NVDA","exchange":"NASDAQ","theme":"IA / Semis","ctx":"motivo breve citado en el chat"}}]}}
+Devuelve EXCLUSIVAMENTE un array JSON, sin texto adicional, con este formato:
+[{{"name":"NVIDIA","ticker":"NVDA","exchange":"NASDAQ","theme":"IA / Semis","ctx":"motivo breve citado en el chat"}}]
 
 Mensajes:
 {convo}
 """
     body = json.dumps({
-        "model": OPENAI_MODEL,
-        "temperature": 0,
-        "response_format": {"type": "json_object"},
+        "model": ANTHROPIC_MODEL,
+        "max_tokens": 1500,
         "messages": [{"role": "user", "content": prompt}],
     }).encode("utf-8")
     headers = {
-        "Authorization": f"Bearer {OPENAI_KEY}",
-        "Content-Type": "application/json",
+        "x-api-key": ANTHROPIC_KEY,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
     }
-    res = http_json("https://api.openai.com/v1/chat/completions", data=body, headers=headers)
-    text = res["choices"][0]["message"]["content"].strip()
+    res = http_json("https://api.anthropic.com/v1/messages", data=body, headers=headers)
+    text = "".join(b.get("text", "") for b in res.get("content", [])).strip()
     if text.startswith("```"):
         text = text.strip("`")
-        text = text[text.find("{"):text.rfind("}") + 1]
+        text = text[text.find("["):text.rfind("]") + 1]
     try:
         data = json.loads(text)
         return data.get("companies", []) if isinstance(data, dict) else data
     except Exception as e:
-        print("No se pudo parsear la respuesta de OpenAI:", e, "\n", text[:500])
+        print("No se pudo parsear la respuesta de Claude:", e, "\n", text[:500])
         return []
 
 
@@ -118,8 +118,8 @@ def valid_ticker(sym):
 
 # ---------- Main ----------
 def main():
-    if not TG_TOKEN or not OPENAI_KEY:
-        print("Faltan TELEGRAM_TOKEN o OPENAI_API_KEY."); sys.exit(1)
+    if not TG_TOKEN or not ANTHROPIC_KEY:
+        print("Faltan TELEGRAM_TOKEN o ANTHROPIC_API_KEY."); sys.exit(1)
 
     state = json.load(open(STATE)) if os.path.exists(STATE) else {"offset": 0}
     db = json.load(open(DATA))
