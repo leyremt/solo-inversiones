@@ -83,7 +83,7 @@ Mensajes:
 """
     body = json.dumps({
         "model": ANTHROPIC_MODEL,
-        "max_tokens": 1500,
+        "max_tokens": 4096,
         "messages": [{"role": "user", "content": prompt}],
     }).encode("utf-8")
     headers = {
@@ -93,15 +93,26 @@ Mensajes:
     }
     res = http_json("https://api.anthropic.com/v1/messages", data=body, headers=headers)
     text = "".join(b.get("text", "") for b in res.get("content", [])).strip()
-    if text.startswith("```"):
-        text = text.strip("`")
-        text = text[text.find("["):text.rfind("]") + 1]
+    if not text:
+        print("Respuesta de Claude sin texto:", json.dumps(res)[:800])
+        return []
+    # Quedarnos solo con el array JSON, aunque venga con texto o vallas alrededor.
+    s, e = text.find("["), text.rfind("]")
+    if s != -1 and e != -1 and e > s:
+        text = text[s:e + 1]
     try:
         data = json.loads(text)
-        return data.get("companies", []) if isinstance(data, dict) else data
-    except Exception as e:
-        print("No se pudo parsear la respuesta de Claude:", e, "\n", text[:500])
-        return []
+    except Exception:
+        # Rescatar un array truncado: cortar hasta el último objeto completo.
+        cut = text.rfind("}")
+        if cut == -1:
+            print("No se pudo parsear (sin objetos):", text[:800]); return []
+        try:
+            data = json.loads(text[:cut + 1] + "]")
+        except Exception as e:
+            print("No se pudo parsear la respuesta de Claude:", e, "\n", text[:800])
+            return []
+    return data.get("companies", []) if isinstance(data, dict) else data
 
 
 # ---------- Validación Finnhub ----------
