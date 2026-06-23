@@ -1,5 +1,5 @@
 {
- "updated": "2026-06-22",
+ "updated": "2026-06-23",
  "companies": {
   "MU": {
    "ticker": "MU",
@@ -720,6 +720,78 @@
    "ctx": "Izaskun indica que está a punto de comprar otro poco de TransDigm, posición de hold",
    "first_seen": "2026-06-22",
    "last_mention": "2026-06-22",
+   "count": 1,
+   "source": "telegram"
+  },
+  "MRNA": {
+   "ticker": "MRNA",
+   "exchange": "NASDAQ",
+   "name": "Moderna",
+   "theme": "Salud / Biotech",
+   "who": "grupo (Telegram)",
+   "ctx": "Nuevo medicamento próximo a aprobación, empresa interesante en pharma",
+   "first_seen": "2026-06-23",
+   "last_mention": "2026-06-23",
+   "count": 1,
+   "source": "telegram"
+  },
+  "GSK": {
+   "ticker": "GSK",
+   "exchange": "NASDAQ",
+   "name": "GlaxoSmithKline",
+   "theme": "Salud / Biotech",
+   "who": "grupo (Telegram)",
+   "ctx": "Empresa grande de pharma, punto de compra considerado",
+   "first_seen": "2026-06-23",
+   "last_mention": "2026-06-23",
+   "count": 1,
+   "source": "telegram"
+  },
+  "AZN": {
+   "ticker": "AZN",
+   "exchange": "NASDAQ",
+   "name": "AstraZeneca",
+   "theme": "Salud / Biotech",
+   "who": "grupo (Telegram)",
+   "ctx": "Tenencia de un año con buenos resultados y dividendos",
+   "first_seen": "2026-06-23",
+   "last_mention": "2026-06-23",
+   "count": 1,
+   "source": "telegram"
+  },
+  "RHHBY": {
+   "ticker": "RHHBY",
+   "exchange": "OTC",
+   "name": "Roche",
+   "theme": "Salud / Biotech",
+   "who": "grupo (Telegram)",
+   "ctx": "Empresa grande de pharma mencionada como opción",
+   "first_seen": "2026-06-23",
+   "last_mention": "2026-06-23",
+   "count": 1,
+   "source": "telegram"
+  },
+  "NVO": {
+   "ticker": "NVO",
+   "exchange": "NASDAQ",
+   "name": "Novo Nordisk",
+   "theme": "Salud / Biotech",
+   "who": "grupo (Telegram)",
+   "ctx": "En caída, buen momento de compra, dividendos, medicamentos para obesidad con mercado potencial",
+   "first_seen": "2026-06-23",
+   "last_mention": "2026-06-23",
+   "count": 1,
+   "source": "telegram"
+  },
+  "DANOY": {
+   "ticker": "DANOY",
+   "exchange": "OTC",
+   "name": "Danone",
+   "theme": "Otros",
+   "who": "grupo (Telegram)",
+   "ctx": "Mención jocosa sobre pago en yogures (Oykos)",
+   "first_seen": "2026-06-23",
+   "last_mention": "2026-06-23",
    "count": 1,
    "source": "telegram"
   }
