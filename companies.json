@@ -1,5 +1,5 @@
 {
- "updated": "2026-06-23",
+ "updated": "2026-06-24",
  "companies": {
   "MU": {
    "ticker": "MU",
@@ -791,7 +791,31 @@
    "who": "grupo (Telegram)",
    "ctx": "Mención jocosa sobre pago en yogures (Oykos)",
    "first_seen": "2026-06-23",
-   "last_mention": "2026-06-23",
+   "last_mention": "2026-06-24",
+   "count": 2,
+   "source": "telegram"
+  },
+  "TEF": {
+   "ticker": "TEF",
+   "exchange": "NYSE",
+   "name": "Telefónica",
+   "theme": "Infraestructura",
+   "who": "grupo (Telegram)",
+   "ctx": "Mencionada como empresa no incluida en el bot (Timofonica)",
+   "first_seen": "2026-06-24",
+   "last_mention": "2026-06-24",
+   "count": 1,
+   "source": "telegram"
+  },
+  "EVC": {
+   "ticker": "EVC",
+   "exchange": "NYSE",
+   "name": "Entravision Communications",
+   "theme": "Otros",
+   "who": "grupo (Telegram)",
+   "ctx": "Está por primera vez por encima de los 10 dólares",
+   "first_seen": "2026-06-24",
+   "last_mention": "2026-06-24",
    "count": 1,
    "source": "telegram"
   }
