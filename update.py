@@ -71,12 +71,15 @@ def extract_companies(messages):
 Extrae SOLO empresas COTIZADAS en bolsa mencionadas como ideas o comentadas como inversión.
 Ignora: bromas, personas, medios (Motley Fool, MarketBeat), gestoras (Vanguard),
 empresas privadas (p.ej. SpaceX), criptos y ETFs genéricos.
-Para cada empresa devuelve su ticker bursátil real (prefiere el listado en EE. UU.; si solo
-cotiza en Europa, da el símbolo del ADR/OTC en EE. UU. si existe).
+Para cada empresa indica:
+- "ticker": su ticker bursátil principal.
+- "yh": su símbolo EXACTO en Yahoo Finance. EE. UU.: el ticker tal cual (p. ej. NVDA).
+  Europa: ticker + sufijo de mercado (p. ej. IBE.MC, BAS.DE, LGEN.L, ENR.DE, BMPS.MI, NESN.SW).
+- "exchange": el mercado (NASDAQ, NYSE, Madrid, XETRA, Milán, Londres, SIX...).
 Clasifícala en una de estas temáticas EXACTAS: {THEMES}.
 
 Devuelve EXCLUSIVAMENTE un array JSON, sin texto adicional, con este formato:
-[{{"name":"NVIDIA","ticker":"NVDA","exchange":"NASDAQ","theme":"IA / Semis","ctx":"motivo breve citado en el chat"}}]
+[{{"name":"Iberdrola","ticker":"IBE","yh":"IBE.MC","exchange":"Madrid","theme":"Infraestructura","ctx":"motivo breve citado en el chat"}}]
 
 Mensajes:
 {convo}
@@ -147,6 +150,7 @@ def yahoo_symbols(c):
     ex = (c.get("exchange") or "").upper()
     cands = []
     if c.get("yh"): cands.append(c["yh"])          # símbolo que ya funcionó
+    cands.append(tk)                                # tal cual (p. ej. DWS.DE ya con sufijo)
     cands.append(tk.replace(".", "-"))             # clases USA: BRK.B -> BRK-B
     if c.get("fh"): cands.append(c["fh"])           # ADR/OTC en EE. UU.
     if "." not in tk:
@@ -254,6 +258,8 @@ def main():
                 "count": 1,
                 "source": "telegram",
             }
+            if c.get("yh"):
+                companies[tk]["yh"] = str(c["yh"]).strip()
             added.append(tk)
 
     refresh_prices(companies)
