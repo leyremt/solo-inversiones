@@ -35,19 +35,20 @@ Tres componentes, sin servidor propio que mantener:
    de modo que puede leer todos los mensajes del grupo.
 2. **Procesamiento** — un script de Python (`update.py`) ejecutado por GitHub Actions
    en un cron diario. Lee los mensajes nuevos, llama a la API de Anthropic (Claude)
-   para extraer empresas, valida los tickers contra Finnhub y actualiza `companies.json`.
+   para extraer empresas, **obtiene el precio y la variación de cada una desde Yahoo
+   Finance** (con Finnhub de respaldo) y actualiza `companies.json`.
 3. **Publicación** — una web estática (`index.html`) alojada en Netlify, conectada al
-   repositorio. Cada commit del motor dispara un redespliegue automático.
+   repositorio. Lee los precios ya calculados de `companies.json`; cada commit del motor
+   dispara un redespliegue automático.
 
 ```mermaid
 flowchart LR
     A[Grupo de Telegram] -->|getUpdates| B[update.py en GitHub Actions]
     B -->|extracción| C[Anthropic Claude]
-    B -->|validación de ticker| D[Finnhub]
+    B -->|precios| D[Yahoo Finance / Finnhub]
     B -->|commit| E[(companies.json + state.json)]
     E -->|push a main| F[Netlify]
     F --> G[Web pública]
-    G -->|precios en vivo, cliente| D
 ```
 
 ---
@@ -59,10 +60,10 @@ en `.github/workflows/` por requisito de GitHub Actions.
 
 | Archivo | Responsabilidad |
 |---|---|
-| `index.html` | Frontend. Carga `companies.json` y pide los precios en vivo a Finnhub desde el navegador. |
+| `index.html` | Frontend. Carga `companies.json` y muestra la lista y los precios (ya calculados por el motor). |
 | `companies.json` | Estado de la lista de empresas. Lo lee la web y lo escribe el motor. |
 | `state.json` | Offset de Telegram (`getUpdates`) para no reprocesar mensajes. |
-| `update.py` | Motor: Telegram → Claude → Finnhub → merge en `companies.json`. |
+| `update.py` | Motor: Telegram → Claude → precios (Yahoo/Finnhub) → merge en `companies.json`. |
 | `.github/workflows/daily.yml` | Cron diario (06:00 UTC) + ejecución manual. Ejecuta `update.py` y commitea los cambios. |
 | `netlify.toml` | Configuración de Netlify: publica la raíz, sin paso de build. |
 
@@ -82,12 +83,13 @@ en `.github/workflows/` por requisito de GitHub Actions.
    `{name, ticker, exchange, theme, ctx}`, limitando la temática a una lista cerrada.
    El parseo es tolerante: recorta a la sección `[ ... ]`, y si la respuesta llega
    truncada, recupera hasta el último objeto completo.
-4. **Valida los tickers.** Para cada ticker consulta `GET /quote` de Finnhub; lo acepta
-   si devuelve un precio `> 0`. Si no hay `FINNHUB_KEY`, o la llamada falla, no se
-   descarta (criterio permisivo, ver [Limitaciones](#limitaciones-conocidas)).
-5. **Mezcla resultados.** Si el ticker ya existe, incrementa `count` y actualiza
+4. **Mezcla resultados.** Si el ticker ya existe, incrementa `count` y actualiza
    `last_mention`. Si es nuevo, lo añade con `source: "telegram"` y la fecha de hoy.
-6. **Persiste.** Reescribe `companies.json` (con `updated` = hoy) y `state.json`
+5. **Obtiene precios.** Para cada empresa pide precio y variación del día a Yahoo Finance
+   (`/v8/finance/chart`), probando el símbolo Yahoo (`yh`), el ticker tal cual y, para
+   europeas, sufijos de mercado (`.MC`, `.DE`, `.MI`, `.SW`, `.L`…). Si Yahoo falla,
+   recurre a Finnhub. Guarda `price`, `change_pct`, `currency` y el símbolo que funcionó.
+6. **Persiste.** Reescribe `companies.json` (con `updated` y `price_asof`) y `state.json`
    (con el nuevo `offset`).
 
 El workflow después hace `git add companies.json state.json` y commitea/pushea solo si
@@ -102,19 +104,23 @@ hay cambios. El push a `main` dispara el redespliegue en Netlify.
 ```json
 {
   "updated": "2026-06-22",
+  "price_asof": "2026-06-22 06:05 UTC",
   "companies": {
-    "NVDA": {
-      "ticker": "NVDA",
-      "exchange": "NASDAQ",
-      "name": "NVIDIA",
-      "theme": "IA / Semis",
+    "IBE": {
+      "ticker": "IBE",
+      "exchange": "Madrid",
+      "name": "Iberdrola",
+      "theme": "Infraestructura",
       "who": "grupo (Telegram)",
       "ctx": "Motivo breve citado en el chat",
       "first_seen": "2026-06-03",
       "last_mention": "2026-06-22",
       "count": 3,
       "source": "telegram",
-      "fh": "PRYMY"
+      "yh": "IBE.MC",
+      "price": 21.69,
+      "change_pct": 1.07,
+      "currency": "EUR"
     }
   }
 }
@@ -131,7 +137,12 @@ hay cambios. El push a `main` dispara el redespliegue en Netlify.
 | `first_seen` / `last_mention` | string (YYYY-MM-DD) | Primera y última vez detectada. |
 | `count` | number | Número de menciones acumuladas. |
 | `source` | string | `whatsapp-seed` (carga inicial) o `telegram` (automáticas). |
-| `fh` | string (opcional) | Símbolo alternativo para Finnhub (ADR/OTC) cuando el principal no cotiza en EE. UU. |
+| `yh` | string (opcional) | Símbolo en Yahoo Finance usado para el precio (p. ej. `IBE.MC`). |
+| `fh` | string (opcional) | Símbolo alternativo para Finnhub (ADR/OTC). |
+| `price` / `change_pct` | number \| null | Último precio y variación del día del refresco; `null` si no se pudo obtener. |
+| `currency` | string | Divisa del precio (USD, EUR, GBp, CHF…). |
+
+El objeto raíz incluye además `price_asof`: fecha y hora (UTC) del último refresco de precios.
 
 ### `state.json`
 
@@ -152,7 +163,9 @@ hay cambios. El push a `main` dispara el redespliegue en Netlify.
 |---|---|---|
 | `TELEGRAM_TOKEN` | Token del bot que lee el grupo | @BotFather |
 | `ANTHROPIC_API_KEY` | Extracción de empresas con IA | console.anthropic.com |
-| `FINNHUB_KEY` | Validación de tickers (servidor) y precios (cliente) | finnhub.io |
+| `FINNHUB_KEY` | Respaldo de precios cuando Yahoo no los tiene (opcional) | finnhub.io |
+
+Los precios se obtienen de **Yahoo Finance**, que no necesita clave; Finnhub solo actúa de respaldo.
 
 ### Constantes en `update.py`
 
@@ -182,8 +195,8 @@ concurrido (los cron "en punto" se retrasan más).
 4. **Crear los tres secrets** (tabla de arriba).
 5. **Conectar Netlify**: Add new project → Import from GitHub → elegir el repo.
    Build command vacío, publish directory `.`. Deploy.
-6. **Insertar la `FINNHUB_KEY` del frontend** en `index.html` (constante
-   `FINNHUB_KEY`), ya que los precios se piden desde el navegador.
+6. **Lanzar el workflow una vez** (Actions → Run workflow) para que el motor rellene los
+   precios iniciales en `companies.json`.
 
 ---
 
@@ -212,10 +225,10 @@ cambios en `companies.json` y `state.json` del directorio actual.
 
 - Al cargar, hace `fetch('companies.json')` (con *cache-busting*) y pinta una tarjeta
   por empresa, con filtros por temática y buscador.
-- Para cada empresa pide el precio y la variación del día a Finnhub
-  (`/quote`), usando `fh` si existe o el `ticker` en caso contrario.
-- La `FINNHUB_KEY` del frontend va embebida en el archivo: es una clave de solo lectura
-  de cotizaciones, pensada para uso en cliente.
+- Muestra `price` y `change_pct` directamente desde `companies.json` (ya calculados por
+  el motor), con el símbolo de divisa según `currency`. No hace llamadas a APIs externas
+  ni lleva claves embebidas.
+- La cabecera muestra la fecha del último refresco de precios (`price_asof`).
 
 ---
 
@@ -226,7 +239,8 @@ cambios en `companies.json` y `state.json` del directorio actual.
 | GitHub Actions | Cron diario | Gratis (límites de cuenta personal) |
 | Netlify | Hosting + auto-deploy | Gratis (plan Starter) |
 | Telegram Bot API | Lectura del grupo | Gratis |
-| Finnhub | Precios + validación | Gratis (plan free, 60 req/min) |
+| Yahoo Finance | Precios y variación diaria | Gratis (sin clave) |
+| Finnhub | Respaldo de precios | Gratis (plan free) |
 | Anthropic (Claude) | Extracción diaria | ~0,30–0,60 €/mes según volumen |
 
 ---
@@ -235,8 +249,8 @@ cambios en `companies.json` y `state.json` del directorio actual.
 
 - `TELEGRAM_TOKEN` y `ANTHROPIC_API_KEY` viven **solo** en GitHub Secrets y se inyectan
   como variables de entorno en el job. No deben aparecer en el código ni en el frontend.
-- La `FINNHUB_KEY` **sí** está en `index.html` porque los precios se consultan desde el
-  navegador. Es una clave de cotizaciones; si se agota el límite, se regenera en Finnhub.
+- El frontend **no lleva ninguna clave**: los precios ya vienen calculados en
+  `companies.json`. La `FINNHUB_KEY` (respaldo) vive solo en GitHub Secrets.
 - El repositorio puede ser privado; la web publicada por Netlify es pública.
 - Rotación: el token del bot se regenera en @BotFather (`/revoke`); las API keys, en sus
   respectivos paneles.
@@ -251,11 +265,10 @@ cambios en `companies.json` y `state.json` del directorio actual.
   el motor debe correr al menos una vez al día.
 - **Cron de GitHub no es exacto:** las tareas programadas pueden retrasarse o saltarse,
   sobre todo a horas en punto. Si falta una ejecución, lanzarla a mano.
-- **Cobertura de Finnhub (plan free):** muchos valores europeos/OTC no devuelven precio
-  (aparecen como "sin datos"); por eso la validación es permisiva y algún ticker puede
-  ser impreciso.
-- **Límite de 60 req/min de Finnhub:** con muchas empresas, la carga simultánea de
-  precios en el frontend puede dejar algunos en blanco hasta recargar.
+- **Precios diarios, no intradía:** se calculan en el refresco diario; no cambian al
+  abrir la página. Yahoo Finance es una fuente no oficial y puede cambiar sin aviso.
+- **Símbolos mal extraídos:** si la IA devuelve un ticker incorrecto, el precio sale
+  "sin datos" hasta corregir el campo `yh` de esa empresa.
 
 ---
 
