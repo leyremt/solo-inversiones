@@ -74,14 +74,14 @@
       <div class="logo">SI</div>
       <div>
         <h1>SOLO INVERSIONES</h1>
-        <div class="sub">Empresas mencionadas en el grupo · lista actualizada <span id="dataupd">…</span> · precios <span id="upd">cargando…</span></div>
+        <div class="sub">Empresas mencionadas en el grupo · lista actualizada <span id="dataupd">…</span> · precios a <span id="upd">…</span></div>
       </div>
     </div>
   </header>
 
   <div class="banner">
     Esta lista se actualiza <b>sola cada día</b> a partir del grupo de Telegram. Los precios se
-    descargan en vivo al abrir la página. La etiqueta <span class="new">NUEVA</span> marca empresas
+    refrescan a diario junto con la lista. La etiqueta <span class="new">NUEVA</span> marca empresas
     detectadas en los últimos días.
   </div>
 
@@ -100,19 +100,15 @@
   <div class="grid" id="grid"></div>
 
   <footer>
-    Datos del grupo «SOLO INVERSIONES». Precios vía Finnhub (~15 min de retardo según mercado).
-    Prysmian y Cosmo Pharmaceuticals se siguen vía su ADR/OTC en USD.
+    Datos del grupo «SOLO INVERSIONES». Precios vía Yahoo Finance (última cotización del refresco diario).
   </footer>
 </div>
 
 <script>
-const FINNHUB_KEY = "d8iqb41r01qtcvnt6tt0d8iqb41r01qtcvnt6ttg";
-
 let companies = [];
 let themes = [];
 let activeTheme = "Todas";
 let query = "";
-let quotes = {};
 
 const grid = document.getElementById('grid');
 const fbox = document.getElementById('filters');
@@ -125,6 +121,7 @@ async function loadData(){
     const db = await r.json();
     companies = Object.values(db.companies);
     document.getElementById('dataupd').textContent = db.updated || '';
+    document.getElementById('upd').textContent = db.price_asof || db.updated || '—';
   }catch(e){
     grid.innerHTML='<p style="color:var(--muted)">No se pudo cargar la lista de empresas.</p>';
     return;
@@ -134,7 +131,7 @@ async function loadData(){
   document.getElementById('s-themes').textContent = themes.length;
   buildFilters();
   render();
-  loadPrices();
+  updateStats();
 }
 
 function buildFilters(){
@@ -153,12 +150,18 @@ function isNew(c){
   const d=(Date.now()-new Date(c.first_seen))/86400000;
   return d>=0 && d<=7 && c.source==='telegram';
 }
+const CUR={USD:'$',EUR:'€',GBP:'£',GBp:'p',CHF:'CHF ',SEK:'kr ',NOK:'kr ',DKK:'kr ',JPY:'¥'};
+function fmtPrice(c){
+  const sym=CUR[c.currency]||'';
+  const code=(!sym && c.currency)?(' '+c.currency):'';
+  return sym+Number(c.price).toFixed(2)+code;
+}
 function priceHtml(c){
-  const q=quotes[c.ticker];
-  if(!q) return `<div class="v flat">—</div><div class="c flat">sin datos</div>`;
-  const cls=q.dp>0.04?'up':(q.dp<-0.04?'down':'flat');
-  const sign=q.dp>0?'+':'';
-  return `<div class="v">$${q.c.toFixed(2)}</div><div class="c ${cls}">${sign}${q.dp.toFixed(2)}% hoy</div>`;
+  if(c.price==null) return `<div class="v flat">—</div><div class="c flat">sin datos</div>`;
+  const dp=Number(c.change_pct||0);
+  const cls=dp>0.04?'up':(dp<-0.04?'down':'flat');
+  const sign=dp>0?'+':'';
+  return `<div class="v">${fmtPrice(c)}</div><div class="c ${cls}">${sign}${dp.toFixed(2)}% hoy</div>`;
 }
 function card(c){
   const tvUrl=`https://www.tradingview.com/symbols/${(c.ticker||'').replace('.','-')}/`;
@@ -186,26 +189,12 @@ function render(){
   grid.innerHTML=list.map(card).join('')||'<p style="color:var(--muted)">Sin resultados.</p>';
 }
 
-/* ---- precios en vivo ---- */
+/* ---- estadísticas (suben/bajan hoy) ---- */
 function updateStats(){
   let up=0,down=0;
-  Object.values(quotes).forEach(q=>{if(q.dp>0)up++;else if(q.dp<0)down++;});
+  companies.forEach(c=>{const d=Number(c.change_pct);if(c.price!=null&&!isNaN(d)){if(d>0)up++;else if(d<0)down++;}});
   document.getElementById('s-up').textContent=up||'–';
   document.getElementById('s-down').textContent=down||'–';
-}
-async function loadPrices(){
-  if(!FINNHUB_KEY){document.getElementById('upd').textContent='sin conectar';return;}
-  document.getElementById('upd').textContent='actualizando…';
-  await Promise.all(companies.map(async c=>{
-    try{
-      const sym=c.fh||c.ticker;
-      const r=await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(sym)}&token=${FINNHUB_KEY}`);
-      const d=await r.json();
-      if(d&&typeof d.c==='number'&&d.c>0) quotes[c.ticker]={c:d.c,dp:(typeof d.dp==='number'?d.dp:0)};
-    }catch(e){}
-  }));
-  render(); updateStats();
-  document.getElementById('upd').textContent='actualizados '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
 }
 
 loadData();

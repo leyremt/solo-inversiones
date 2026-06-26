@@ -15,7 +15,7 @@ Variables de entorno necesarias:
 El commit/push de los cambios lo hace el workflow de GitHub Actions.
 """
 
-import os, json, sys, datetime, urllib.request, urllib.parse, urllib.error
+import os, json, sys, time, datetime, urllib.request, urllib.parse, urllib.error
 
 # ---- Config ----
 CHAT_ID = -1004388607461            # grupo "SOLO INVERSIONES"
@@ -127,6 +127,94 @@ def valid_ticker(sym):
         return True  # ante la duda, no descartamos
 
 
+# ---------- Precios (Yahoo Finance, con Finnhub de respaldo) ----------
+YH_SUFFIX = {
+    "MADRID": ".MC", "BME": ".MC", "BOLSA DE MADRID": ".MC",
+    "MILAN": ".MI", "MILANO": ".MI", "BORSA": ".MI", "BIT": ".MI",
+    "XETRA": ".DE", "FRANKFURT": ".DE", "FRA": ".DE", "ETR": ".DE", "GER": ".DE", "DEUTSCHE": ".DE",
+    "SIX": ".SW", "SWISS": ".SW", "ZURICH": ".SW", "VTX": ".SW",
+    "PARIS": ".PA", "EPA": ".PA",
+    "AMSTERDAM": ".AS",
+    "LONDON": ".L", "LSE": ".L", "LON": ".L",
+    "LISBON": ".LS", "BRUSSELS": ".BR", "STOCKHOLM": ".ST",
+    "OSLO": ".OL", "COPENHAGEN": ".CO", "HELSINKI": ".HE", "VIENNA": ".VI",
+}
+US_HINTS = ("NASDAQ", "NYSE", "AMEX", "ARCA", "BATS", "OTC", "US")
+
+def yahoo_symbols(c):
+    """Lista de símbolos candidatos a probar en Yahoo, en orden de preferencia."""
+    tk = (c.get("ticker") or "").upper().strip()
+    ex = (c.get("exchange") or "").upper()
+    cands = []
+    if c.get("yh"): cands.append(c["yh"])          # símbolo que ya funcionó
+    cands.append(tk.replace(".", "-"))             # clases USA: BRK.B -> BRK-B
+    if c.get("fh"): cands.append(c["fh"])           # ADR/OTC en EE. UU.
+    if "." not in tk:
+        suf = next((v for k, v in YH_SUFFIX.items() if k in ex), None)
+        if suf:
+            cands.append(tk + suf)
+        if not any(h in ex for h in US_HINTS):     # europea probable: probar sufijos comunes
+            for v in (".MC", ".MI", ".DE", ".SW", ".PA", ".AS", ".L"):
+                cands.append(tk + v)
+    seen, out = set(), []
+    for s in cands:
+        if s and s not in seen:
+            seen.add(s); out.append(s)
+    return out
+
+def yahoo_quote(sym):
+    url = (f"https://query1.finance.yahoo.com/v8/finance/chart/"
+           f"{urllib.parse.quote(sym)}?interval=1d&range=2d")
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=20) as r:
+        d = json.loads(r.read().decode("utf-8"))
+    res = (d.get("chart") or {}).get("result")
+    if not res:
+        return None
+    meta = res[0].get("meta") or {}
+    price = meta.get("regularMarketPrice")
+    prev = meta.get("chartPreviousClose") or meta.get("previousClose")
+    if not isinstance(price, (int, float)) or price <= 0:
+        return None
+    pct = ((price / prev - 1) * 100) if isinstance(prev, (int, float)) and prev else 0.0
+    return {"price": round(price, 2), "pct": round(pct, 2),
+            "sym": sym, "cur": meta.get("currency", "")}
+
+def finnhub_quote(sym):
+    if not FINNHUB_KEY or not sym:
+        return None
+    try:
+        url = f"https://finnhub.io/api/v1/quote?symbol={urllib.parse.quote(sym)}&token={FINNHUB_KEY}"
+        q = http_json(url, timeout=15)
+        if isinstance(q.get("c"), (int, float)) and q["c"] > 0:
+            return {"price": round(q["c"], 2), "pct": round(q.get("dp") or 0, 2),
+                    "sym": sym, "cur": "USD"}
+    except Exception:
+        pass
+    return None
+
+def refresh_prices(companies):
+    ok = 0
+    for tk, c in companies.items():
+        q = None
+        for sym in yahoo_symbols(c):
+            try:
+                q = yahoo_quote(sym)
+            except Exception:
+                q = None
+            if q:
+                break
+            time.sleep(0.05)
+        if not q:
+            q = finnhub_quote(c.get("fh")) or finnhub_quote(tk)
+        if q:
+            c["price"] = q["price"]; c["change_pct"] = q["pct"]
+            c["currency"] = q["cur"]; c["yh"] = q["sym"]; ok += 1
+        else:
+            c["price"] = None; c["change_pct"] = None
+    print(f"Precios resueltos: {ok}/{len(companies)}")
+
+
 # ---------- Main ----------
 def main():
     if not TG_TOKEN or not ANTHROPIC_KEY:
@@ -168,8 +256,11 @@ def main():
             }
             added.append(tk)
 
+    refresh_prices(companies)
+
     db["companies"] = companies
     db["updated"] = TODAY
+    db["price_asof"] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
     json.dump(db, open(DATA, "w"), ensure_ascii=False, indent=1)
     json.dump({"offset": new_offset}, open(STATE, "w"))
 
