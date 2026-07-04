@@ -76,6 +76,7 @@ Para cada empresa indica:
 - "yh": su símbolo EXACTO en Yahoo Finance. EE. UU.: el ticker tal cual (p. ej. NVDA).
   Europa: ticker + sufijo de mercado (p. ej. IBE.MC, BAS.DE, LGEN.L, ENR.DE, BMPS.MI, NESN.SW).
 - "exchange": el mercado (NASDAQ, NYSE, Madrid, XETRA, Milán, Londres, SIX...).
+- "ctx": motivo breve. NUNCA incluyas nombres de personas del chat; el contexto debe ser anónimo.
 Clasifícala en una de estas temáticas EXACTAS: {THEMES}.
 
 Devuelve EXCLUSIVAMENTE un array JSON, sin texto adicional, con este formato:
@@ -251,7 +252,7 @@ def main():
                 "exchange": c.get("exchange", ""),
                 "name": c.get("name", tk),
                 "theme": theme,
-                "who": "grupo (Telegram)",
+                "who": "El grupo",
                 "ctx": c.get("ctx", "Mencionada en el grupo."),
                 "first_seen": TODAY,
                 "last_mention": TODAY,
