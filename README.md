@@ -5,8 +5,10 @@ Telegram. Cada día, un bot lee los mensajes nuevos, un modelo de lenguaje extra
 las empresas (ticker, mercado, temática y contexto) y el resultado se publica en
 una web estática que se redespliega sola.
 
+**Web en vivo:** https://leyremt.github.io/solo-inversiones/
+
 ```
-Telegram (grupo)  →  GitHub Actions (diario)  →  companies.json  →  Netlify (web pública)
+Telegram (grupo)  →  GitHub Actions (diario)  →  companies.json  →  GitHub Pages (web pública)
 ```
 
 ## Tabla de contenidos
@@ -37,9 +39,9 @@ Tres componentes, sin servidor propio que mantener:
    en un cron diario. Lee los mensajes nuevos, llama a la API de Anthropic (Claude)
    para extraer empresas, **obtiene el precio y la variación de cada una desde Yahoo
    Finance** (con Finnhub de respaldo) y actualiza `companies.json`.
-3. **Publicación** — una web estática (`index.html`) alojada en Netlify, conectada al
-   repositorio. Lee los precios ya calculados de `companies.json`; cada commit del motor
-   dispara un redespliegue automático.
+3. **Publicación** — una web estática (`index.html`) servida por **GitHub Pages** desde
+   la rama `main`. Lee los precios ya calculados de `companies.json`; cada commit del
+   motor la republica automáticamente.
 
 ```mermaid
 flowchart LR
@@ -47,7 +49,7 @@ flowchart LR
     B -->|extracción| C[Anthropic Claude]
     B -->|precios| D[Yahoo Finance / Finnhub]
     B -->|commit| E[(companies.json + state.json)]
-    E -->|push a main| F[Netlify]
+    E -->|push a main| F[GitHub Pages]
     F --> G[Web pública]
 ```
 
@@ -65,7 +67,7 @@ en `.github/workflows/` por requisito de GitHub Actions.
 | `state.json` | Offset de Telegram (`getUpdates`) para no reprocesar mensajes. |
 | `update.py` | Motor: Telegram → Claude → precios (Yahoo/Finnhub) → merge en `companies.json`. |
 | `.github/workflows/daily.yml` | Cron diario (06:00 UTC) + ejecución manual. Ejecuta `update.py` y commitea los cambios. |
-| `netlify.toml` | Configuración de Netlify: publica la raíz, sin paso de build. |
+| `netlify.toml` | Config heredada de Netlify (GitHub Pages no la usa; se puede borrar). |
 
 ---
 
@@ -93,7 +95,7 @@ en `.github/workflows/` por requisito de GitHub Actions.
    (con el nuevo `offset`).
 
 El workflow después hace `git add companies.json state.json` y commitea/pushea solo si
-hay cambios. El push a `main` dispara el redespliegue en Netlify.
+hay cambios. El push a `main` republica la web en GitHub Pages.
 
 ---
 
@@ -111,7 +113,7 @@ hay cambios. El push a `main` dispara el redespliegue en Netlify.
       "exchange": "Madrid",
       "name": "Iberdrola",
       "theme": "Infraestructura",
-      "who": "grupo (Telegram)",
+      "who": "El grupo",
       "ctx": "Motivo breve citado en el chat",
       "first_seen": "2026-06-03",
       "last_mention": "2026-06-22",
@@ -132,8 +134,8 @@ hay cambios. El push a `main` dispara el redespliegue en Netlify.
 | `exchange` | string | Mercado (NASDAQ, NYSE, Milán*, SIX*, …). |
 | `name` | string | Nombre de la empresa. |
 | `theme` | string | Una de las temáticas cerradas (`THEMES` en `update.py`). |
-| `who` | string | Quién la mencionó (`grupo (Telegram)` para las automáticas). |
-| `ctx` | string | Contexto/motivo breve. |
+| `who` | string | Anonimizado: siempre `El grupo` (no se guardan nombres de personas). |
+| `ctx` | string | Contexto/motivo breve (sin nombres de personas). |
 | `first_seen` / `last_mention` | string (YYYY-MM-DD) | Primera y última vez detectada. |
 | `count` | number | Número de menciones acumuladas. |
 | `source` | string | `whatsapp-seed` (carga inicial) o `telegram` (automáticas). |
@@ -193,8 +195,8 @@ concurrido (los cron "en punto" se retrasan más).
    Ponerlo en `CHAT_ID` dentro de `update.py`.
 3. **Subir el repo** a GitHub.
 4. **Crear los tres secrets** (tabla de arriba).
-5. **Conectar Netlify**: Add new project → Import from GitHub → elegir el repo.
-   Build command vacío, publish directory `.`. Deploy.
+5. **Activar GitHub Pages**: con el repo **público** → Settings → Pages → *Deploy from a
+   branch* → `main` / `/ (root)`. La web queda en `https://<usuario>.github.io/<repo>/`.
 6. **Lanzar el workflow una vez** (Actions → Run workflow) para que el motor rellene los
    precios iniciales en `companies.json`.
 
@@ -237,7 +239,7 @@ cambios en `companies.json` y `state.json` del directorio actual.
 | Servicio | Uso | Coste |
 |---|---|---|
 | GitHub Actions | Cron diario | Gratis (límites de cuenta personal) |
-| Netlify | Hosting + auto-deploy | Gratis (plan Starter) |
+| GitHub Pages | Hosting + auto-deploy | Gratis (repo público) |
 | Telegram Bot API | Lectura del grupo | Gratis |
 | Yahoo Finance | Precios y variación diaria | Gratis (sin clave) |
 | Finnhub | Respaldo de precios | Gratis (plan free) |
@@ -251,7 +253,8 @@ cambios en `companies.json` y `state.json` del directorio actual.
   como variables de entorno en el job. No deben aparecer en el código ni en el frontend.
 - El frontend **no lleva ninguna clave**: los precios ya vienen calculados en
   `companies.json`. La `FINNHUB_KEY` (respaldo) vive solo en GitHub Secrets.
-- El repositorio puede ser privado; la web publicada por Netlify es pública.
+- El repositorio es **público** (requisito de GitHub Pages gratis). La web muestra datos
+  **anonimizados**: el campo `who` es siempre `El grupo` y no se guardan nombres de personas.
 - Rotación: el token del bot se regenera en @BotFather (`/revoke`); las API keys, en sus
   respectivos paneles.
 
