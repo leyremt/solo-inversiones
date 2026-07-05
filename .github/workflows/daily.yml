@@ -2,15 +2,24 @@ name: Actualizar empresas (diario)
 
 on:
   schedule:
-    - cron: "0 6 * * *"
-  workflow_dispatch:
+    - cron: "0 6 * * *"          # cada día a las 06:00 UTC
+  workflow_dispatch:             # permite lanzarlo a mano desde la pestaña Actions
 
 permissions:
-  contents: write
+  contents: write                # guardar cambios en el repo
+  pages: write                   # publicar en GitHub Pages
+  id-token: write                # autenticación del despliegue de Pages
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy1.outputs.page_url || steps.deploy2.outputs.page_url }}
     steps:
       - name: Descargar el repo
         uses: actions/checkout@v4
@@ -38,3 +47,31 @@ jobs:
             git commit -m "Update $(date -u +%Y-%m-%d)"
             git push
           fi
+
+      - name: Preparar carpeta de publicacion
+        run: |
+          mkdir -p _site
+          cp index.html companies.json _site/
+          touch _site/.nojekyll
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Subir la web como artefacto
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_site"
+
+      - name: Desplegar en GitHub Pages (intento 1)
+        id: deploy1
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Esperar antes de reintentar
+        if: steps.deploy1.outcome == 'failure'
+        run: sleep 30
+
+      - name: Desplegar en GitHub Pages (reintento)
+        id: deploy2
+        if: steps.deploy1.outcome == 'failure'
+        uses: actions/deploy-pages@v4
