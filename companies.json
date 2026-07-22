@@ -1,5 +1,5 @@
 {
- "updated": "2026-07-21",
+ "updated": "2026-07-22",
  "companies": {
   "MU": {
    "ticker": "MU",
@@ -12,8 +12,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 865.46,
-   "change_pct": 1.44,
+   "price": 970.82,
+   "change_pct": 14.36,
    "currency": "USD",
    "yh": "MU"
   },
@@ -28,8 +28,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 203.28,
-   "change_pct": -1.99,
+   "price": 207.29,
+   "change_pct": 2.21,
    "currency": "USD",
    "yh": "NVDA"
   },
@@ -44,8 +44,8 @@
    "last_mention": "2026-06-27",
    "count": 2,
    "source": "whatsapp-seed",
-   "price": 97.06,
-   "change_pct": 0.08,
+   "price": 105.45,
+   "change_pct": 10.95,
    "currency": "USD",
    "yh": "INTC"
   },
@@ -60,8 +60,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 269.61,
-   "change_pct": 2.9,
+   "price": 289.73,
+   "change_pct": 8.44,
    "currency": "USD",
    "yh": "ARM"
   },
@@ -76,8 +76,8 @@
    "last_mention": "2026-06-22",
    "count": 2,
    "source": "whatsapp-seed",
-   "price": 285.4,
-   "change_pct": 3.05,
+   "price": 317.22,
+   "change_pct": 14.27,
    "currency": "USD",
    "yh": "COHR"
   },
@@ -92,8 +92,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 153.1,
-   "change_pct": -3.34,
+   "price": 162.41,
+   "change_pct": 5.04,
    "currency": "USD",
    "yh": "GLW"
   },
@@ -108,8 +108,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 34.24,
-   "change_pct": -2.45,
+   "price": 35.51,
+   "change_pct": 2.1,
    "currency": "USD",
    "yh": "IONQ"
   },
@@ -124,8 +124,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 16.72,
-   "change_pct": -1.18,
+   "price": 17.8,
+   "change_pct": 6.4,
    "currency": "USD",
    "yh": "QBTS"
   },
@@ -140,8 +140,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 65.74,
-   "change_pct": -2.39,
+   "price": 69.12,
+   "change_pct": 2.22,
    "currency": "USD",
    "yh": "RKLB"
   },
@@ -156,8 +156,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 8.6,
-   "change_pct": 1.78,
+   "price": 9.42,
+   "change_pct": 11.48,
    "currency": "USD",
    "yh": "RDW"
   },
@@ -172,8 +172,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 41.51,
-   "change_pct": -0.46,
+   "price": 44.13,
+   "change_pct": 7.35,
    "currency": "USD",
    "yh": "OKLO"
   },
@@ -188,8 +188,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 7.96,
-   "change_pct": 4.19,
+   "price": 8.71,
+   "change_pct": 12.82,
    "currency": "USD",
    "yh": "SMR"
   },
@@ -204,8 +204,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 17.01,
-   "change_pct": -1.79,
+   "price": 17.64,
+   "change_pct": 2.08,
    "currency": "USD",
    "yh": "SOFI"
   },
@@ -220,8 +220,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 13.99,
-   "change_pct": 1.45,
+   "price": 14.39,
+   "change_pct": 5.89,
    "currency": "USD",
    "yh": "NU"
   },
@@ -236,8 +236,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 14.71,
-   "change_pct": 0.82,
+   "price": 14.77,
+   "change_pct": 2.0,
    "currency": "USD",
    "yh": "DLO"
   },
@@ -252,8 +252,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 41.24,
-   "change_pct": 2.64,
+   "price": 40.89,
+   "change_pct": 0.37,
    "currency": "USD",
    "yh": "TBBB"
   },
@@ -268,8 +268,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 54.59,
-   "change_pct": -1.71,
+   "price": 54.19,
+   "change_pct": -2.13,
    "currency": "USD",
    "yh": "MAIN"
   },
@@ -284,8 +284,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 9.2,
-   "change_pct": -2.44,
+   "price": 9.15,
+   "change_pct": -1.82,
    "currency": "USD",
    "yh": "RITM"
   },
@@ -300,8 +300,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 5.03,
-   "change_pct": -2.33,
+   "price": 5.1,
+   "change_pct": -1.54,
    "currency": "USD",
    "yh": "ABR"
   },
@@ -316,8 +316,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 65.18,
-   "change_pct": -0.87,
+   "price": 64.99,
+   "change_pct": -1.1,
    "currency": "USD",
    "yh": "O"
   },
@@ -332,8 +332,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 8.7,
-   "change_pct": -2.68,
+   "price": 8.83,
+   "change_pct": 0.86,
    "currency": "USD",
    "yh": "LAND"
   },
@@ -348,8 +348,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 16.41,
-   "change_pct": -2.55,
+   "price": 16.54,
+   "change_pct": 0.0,
    "currency": "USD",
    "yh": "GAIN"
   },
@@ -364,8 +364,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 239.05,
-   "change_pct": -1.32,
+   "price": 233.18,
+   "change_pct": -2.56,
    "currency": "USD",
    "yh": "WM"
   },
@@ -380,8 +380,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 107.61,
-   "change_pct": 1.04,
+   "price": 110.6,
+   "change_pct": 2.91,
    "currency": "USD",
    "yh": "CVS"
   },
@@ -396,8 +396,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 547.44,
-   "change_pct": -0.74,
+   "price": 538.3,
+   "change_pct": -0.97,
    "currency": "USD",
    "yh": "MA"
   },
@@ -412,8 +412,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 351.99,
-   "change_pct": -0.7,
+   "price": 347.15,
+   "change_pct": 0.11,
    "currency": "USD",
    "yh": "GOOGL"
   },
@@ -428,8 +428,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 249.99,
-   "change_pct": 0.04,
+   "price": 247.55,
+   "change_pct": 0.13,
    "currency": "USD",
    "yh": "AMZN"
   },
@@ -445,8 +445,8 @@
    "count": 1,
    "source": "whatsapp-seed",
    "yh": "BRK-B",
-   "price": 491.25,
-   "change_pct": -0.38,
+   "price": 489.65,
+   "change_pct": -0.26,
    "currency": "USD"
   },
   "BN": {
@@ -460,8 +460,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 42.39,
-   "change_pct": -4.31,
+   "price": 42.15,
+   "change_pct": -3.39,
    "currency": "USD",
    "yh": "BN"
   },
@@ -476,8 +476,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 339.22,
-   "change_pct": -0.75,
+   "price": 339.06,
+   "change_pct": -4.45,
    "currency": "USD",
    "yh": "KRYS"
   },
@@ -494,8 +494,8 @@
    "source": "whatsapp-seed",
    "fh": "CMOPF",
    "yh": "CMOPF",
-   "price": 77.1,
-   "change_pct": -4.15,
+   "price": 75.13,
+   "change_pct": -2.56,
    "currency": "USD"
   },
   "PRY": {
@@ -511,8 +511,8 @@
    "source": "whatsapp-seed",
    "fh": "PRYMY",
    "yh": "PRYMY",
-   "price": 71.03,
-   "change_pct": -4.14,
+   "price": 74.2,
+   "change_pct": 3.67,
    "currency": "USD"
   },
   "FIX": {
@@ -526,8 +526,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 1712.18,
-   "change_pct": 1.88,
+   "price": 1773.51,
+   "change_pct": 5.94,
    "currency": "USD",
    "yh": "FIX"
   },
@@ -542,8 +542,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 650.22,
-   "change_pct": 1.38,
+   "price": 694.4,
+   "change_pct": 8.74,
    "currency": "USD",
    "yh": "STRL"
   },
@@ -558,8 +558,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 21.34,
-   "change_pct": -0.28,
+   "price": 21.19,
+   "change_pct": -2.26,
    "currency": "USD",
    "yh": "ZETA"
   },
@@ -574,8 +574,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 338.87,
-   "change_pct": -1.25,
+   "price": 345.23,
+   "change_pct": 1.21,
    "currency": "USD",
    "yh": "JPM"
   },
@@ -591,8 +591,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "BC8.DE",
-   "price": 30.44,
-   "change_pct": 0.53,
+   "price": 30.68,
+   "change_pct": 0.99,
    "currency": "EUR"
   },
   "DWSQ.DE": {
@@ -607,8 +607,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "DWS.DE",
-   "price": 70.2,
-   "change_pct": 0.79,
+   "price": 70.0,
+   "change_pct": -0.78,
    "currency": "EUR"
   },
   "PK": {
@@ -622,8 +622,8 @@
    "last_mention": "2026-06-22",
    "count": 1,
    "source": "telegram",
-   "price": 14.84,
-   "change_pct": 1.64,
+   "price": 15.06,
+   "change_pct": 1.21,
    "currency": "USD",
    "yh": "PK"
   },
@@ -638,8 +638,8 @@
    "last_mention": "2026-06-22",
    "count": 1,
    "source": "telegram",
-   "price": 67.9,
-   "change_pct": -3.89,
+   "price": 68.31,
+   "change_pct": -2.2,
    "currency": "USD",
    "yh": "BXP"
   },
@@ -654,8 +654,8 @@
    "last_mention": "2026-06-22",
    "count": 1,
    "source": "telegram",
-   "price": 39.64,
-   "change_pct": -1.91,
+   "price": 39.56,
+   "change_pct": -1.71,
    "currency": "USD",
    "yh": "KRC"
   },
@@ -671,8 +671,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "LGEN.L",
-   "price": 294.9,
-   "change_pct": -1.11,
+   "price": 299.6,
+   "change_pct": 1.15,
    "currency": "GBp"
   },
   "BMPS": {
@@ -687,8 +687,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "BMPS.MI",
-   "price": 11.32,
-   "change_pct": 1.36,
+   "price": 11.46,
+   "change_pct": 1.92,
    "currency": "EUR"
   },
   "BPMB.MI": {
@@ -703,8 +703,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "BAMI.MI",
-   "price": 15.6,
-   "change_pct": 1.23,
+   "price": 15.66,
+   "change_pct": 0.93,
    "currency": "EUR"
   },
   "ISP": {
@@ -719,8 +719,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "ISP.MI",
-   "price": 6.37,
-   "change_pct": 1.46,
+   "price": 6.4,
+   "change_pct": 0.99,
    "currency": "EUR"
   },
   "ALMTF": {
@@ -735,8 +735,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "AII.TO",
-   "price": 19.53,
-   "change_pct": 5.45,
+   "price": 21.15,
+   "change_pct": 9.87,
    "currency": "CAD"
   },
   "BBVA": {
@@ -750,8 +750,8 @@
    "last_mention": "2026-06-22",
    "count": 1,
    "source": "telegram",
-   "price": 25.12,
-   "change_pct": -2.26,
+   "price": 25.66,
+   "change_pct": 2.07,
    "currency": "USD",
    "yh": "BBVA"
   },
@@ -767,8 +767,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "REP.MC",
-   "price": 24.87,
-   "change_pct": 0.08,
+   "price": 25.32,
+   "change_pct": 1.69,
    "currency": "EUR"
   },
   "IBE": {
@@ -783,8 +783,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "IBE.MC",
-   "price": 21.37,
-   "change_pct": 0.42,
+   "price": 21.18,
+   "change_pct": -0.66,
    "currency": "EUR"
   },
   "EOAN": {
@@ -799,8 +799,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "EOAN.DE",
-   "price": 19.35,
-   "change_pct": 0.6,
+   "price": 19.43,
+   "change_pct": 0.99,
    "currency": "EUR"
   },
   "BAS": {
@@ -815,8 +815,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "BAS.DE",
-   "price": 47.77,
-   "change_pct": -1.6,
+   "price": 48.35,
+   "change_pct": 0.58,
    "currency": "EUR"
   },
   "DPSGY": {
@@ -831,8 +831,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "DHL.DE",
-   "price": 56.82,
-   "change_pct": -0.14,
+   "price": 56.8,
+   "change_pct": 1.03,
    "currency": "EUR"
   },
   "ABDN": {
@@ -847,8 +847,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "ABDN.L",
-   "price": 245.82,
-   "change_pct": -1.83,
+   "price": 245.0,
+   "change_pct": -0.81,
    "currency": "GBp"
   },
   "IFNNY": {
@@ -863,8 +863,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "IFNNY",
-   "price": 72.15,
-   "change_pct": -1.49,
+   "price": 77.26,
+   "change_pct": 5.69,
    "currency": "USD"
   },
   "SMNEY": {
@@ -879,8 +879,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "ENR.DE",
-   "price": 153.9,
-   "change_pct": 4.23,
+   "price": 156.92,
+   "change_pct": 2.8,
    "currency": "EUR"
   },
   "BE": {
@@ -894,8 +894,8 @@
    "last_mention": "2026-06-22",
    "count": 1,
    "source": "telegram",
-   "price": 197.06,
-   "change_pct": -4.68,
+   "price": 226.26,
+   "change_pct": 5.26,
    "currency": "USD",
    "yh": "BE"
   },
@@ -910,8 +910,8 @@
    "last_mention": "2026-06-22",
    "count": 1,
    "source": "telegram",
-   "price": 2.13,
-   "change_pct": -0.93,
+   "price": 2.27,
+   "change_pct": 4.61,
    "currency": "USD",
    "yh": "PLUG"
   },
@@ -926,8 +926,8 @@
    "last_mention": "2026-06-22",
    "count": 1,
    "source": "telegram",
-   "price": 94.46,
-   "change_pct": -1.68,
+   "price": 93.85,
+   "change_pct": -1.52,
    "currency": "USD",
    "yh": "SO"
   },
@@ -942,8 +942,8 @@
    "last_mention": "2026-06-22",
    "count": 1,
    "source": "telegram",
-   "price": 148.33,
-   "change_pct": 0.8,
+   "price": 151.78,
+   "change_pct": 3.27,
    "currency": "USD",
    "yh": "AER"
   },
@@ -958,8 +958,8 @@
    "last_mention": "2026-06-22",
    "count": 1,
    "source": "telegram",
-   "price": 1204.73,
-   "change_pct": -2.14,
+   "price": 1205.49,
+   "change_pct": -0.74,
    "currency": "USD",
    "yh": "TDG"
   },
@@ -974,8 +974,8 @@
    "last_mention": "2026-06-23",
    "count": 1,
    "source": "telegram",
-   "price": 59.49,
-   "change_pct": -5.8,
+   "price": 59.66,
+   "change_pct": -3.49,
    "currency": "USD",
    "yh": "MRNA"
   },
@@ -990,8 +990,8 @@
    "last_mention": "2026-06-23",
    "count": 1,
    "source": "telegram",
-   "price": 50.04,
-   "change_pct": -5.17,
+   "price": 50.78,
+   "change_pct": -1.89,
    "currency": "USD",
    "yh": "GSK"
   },
@@ -1006,8 +1006,8 @@
    "last_mention": "2026-06-23",
    "count": 1,
    "source": "telegram",
-   "price": 164.52,
-   "change_pct": -2.82,
+   "price": 169.34,
+   "change_pct": 0.26,
    "currency": "USD",
    "yh": "AZN"
   },
@@ -1023,8 +1023,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "RHHBY",
-   "price": 51.0,
-   "change_pct": -0.87,
+   "price": 51.14,
+   "change_pct": -0.89,
    "currency": "USD"
   },
   "NVO": {
@@ -1038,8 +1038,8 @@
    "last_mention": "2026-06-23",
    "count": 1,
    "source": "telegram",
-   "price": 49.61,
-   "change_pct": -3.63,
+   "price": 49.38,
+   "change_pct": -1.87,
    "currency": "USD",
    "yh": "NVO"
   },
@@ -1055,8 +1055,8 @@
    "count": 2,
    "source": "telegram",
    "yh": "DANOY",
-   "price": 16.73,
-   "change_pct": 0.36,
+   "price": 16.36,
+   "change_pct": -1.51,
    "currency": "USD"
   },
   "TEF": {
@@ -1070,8 +1070,8 @@
    "last_mention": "2026-06-24",
    "count": 1,
    "source": "telegram",
-   "price": 4.02,
-   "change_pct": -1.95,
+   "price": 3.99,
+   "change_pct": -0.75,
    "currency": "USD",
    "yh": "TEF"
   },
@@ -1086,8 +1086,8 @@
    "last_mention": "2026-06-24",
    "count": 1,
    "source": "telegram",
-   "price": 11.03,
-   "change_pct": 4.95,
+   "price": 10.85,
+   "change_pct": 1.5,
    "currency": "USD",
    "yh": "EVC"
   },
@@ -1103,8 +1103,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "ASML.AS",
-   "price": 1564.0,
-   "change_pct": 2.84,
+   "price": 1565.0,
+   "change_pct": -1.78,
    "currency": "EUR"
   },
   "TSM": {
@@ -1119,8 +1119,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "TSM",
-   "price": 402.3,
-   "change_pct": -1.82,
+   "price": 424.61,
+   "change_pct": 6.59,
    "currency": "USD"
   },
   "NEM": {
@@ -1135,8 +1135,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "NEM.DE",
-   "price": 55.65,
-   "change_pct": -0.18,
+   "price": 53.95,
+   "change_pct": -3.49,
    "currency": "EUR"
   },
   "GBF": {
@@ -1151,8 +1151,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "GBF.DE",
-   "price": 83.7,
-   "change_pct": 0.18,
+   "price": 86.3,
+   "change_pct": 2.74,
    "currency": "EUR"
   },
   "RACE": {
@@ -1167,10 +1167,10 @@
    "count": 1,
    "source": "telegram",
    "yh": "RACE.MI",
-   "price": 325.15,
-   "change_pct": -1.13,
+   "price": 323.6,
+   "change_pct": -1.01,
    "currency": "EUR"
   }
  },
- "price_asof": "2026-07-21 08:24 UTC"
+ "price_asof": "2026-07-22 08:25 UTC"
 }
