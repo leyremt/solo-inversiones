@@ -1,5 +1,5 @@
 {
- "updated": "2026-08-09",
+ "updated": "2026-08-10",
  "companies": {
   "MU": {
    "ticker": "MU",
@@ -124,8 +124,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 16.21,
-   "change_pct": -24.22,
+   "price": 20.76,
+   "change_pct": -2.95,
    "currency": "USD",
    "yh": "QBTS"
   },
@@ -591,8 +591,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "BC8.DE",
-   "price": 37.6,
-   "change_pct": 0.7,
+   "price": 37.46,
+   "change_pct": 1.08,
    "currency": "EUR"
   },
   "DWSQ.DE": {
@@ -607,8 +607,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "DWS.DE",
-   "price": 74.75,
-   "change_pct": -1.12,
+   "price": 74.7,
+   "change_pct": -2.29,
    "currency": "EUR"
   },
   "PK": {
@@ -671,8 +671,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "LGEN.L",
-   "price": 316.4,
-   "change_pct": 3.67,
+   "price": 312.3,
+   "change_pct": 0.1,
    "currency": "GBp"
   },
   "BMPS": {
@@ -687,8 +687,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "BMPS.MI",
-   "price": 11.9,
-   "change_pct": 0.24,
+   "price": 11.86,
+   "change_pct": -0.17,
    "currency": "EUR"
   },
   "BPMB.MI": {
@@ -703,8 +703,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "BAMI.MI",
-   "price": 17.0,
-   "change_pct": 2.87,
+   "price": 17.05,
+   "change_pct": -0.76,
    "currency": "EUR"
   },
   "ISP": {
@@ -720,7 +720,7 @@
    "source": "telegram",
    "yh": "ISP.MI",
    "price": 6.82,
-   "change_pct": 0.87,
+   "change_pct": 0.29,
    "currency": "EUR"
   },
   "ALMTF": {
@@ -767,8 +767,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "REP.MC",
-   "price": 25.28,
-   "change_pct": -0.71,
+   "price": 25.36,
+   "change_pct": 0.32,
    "currency": "EUR"
   },
   "IBE": {
@@ -783,8 +783,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "IBE.MC",
-   "price": 20.7,
-   "change_pct": -0.1,
+   "price": 20.66,
+   "change_pct": -0.19,
    "currency": "EUR"
   },
   "EOAN": {
@@ -799,8 +799,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "EOAN.DE",
-   "price": 19.02,
-   "change_pct": 1.25,
+   "price": 18.96,
+   "change_pct": 0.08,
    "currency": "EUR"
   },
   "BAS": {
@@ -815,8 +815,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "BAS.DE",
-   "price": 51.5,
-   "change_pct": 1.58,
+   "price": 51.56,
+   "change_pct": 0.47,
    "currency": "EUR"
   },
   "DPSGY": {
@@ -831,8 +831,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "DHL.DE",
-   "price": 55.32,
-   "change_pct": -0.47,
+   "price": 55.24,
+   "change_pct": -0.11,
    "currency": "EUR"
   },
   "ABDN": {
@@ -847,8 +847,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "ABDN.L",
-   "price": 252.6,
-   "change_pct": -0.71,
+   "price": 251.2,
+   "change_pct": -0.16,
    "currency": "GBp"
   },
   "IFNNY": {
@@ -879,8 +879,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "ENR.DE",
-   "price": 153.54,
-   "change_pct": 1.78,
+   "price": 156.12,
+   "change_pct": 1.59,
    "currency": "EUR"
   },
   "BE": {
@@ -1070,8 +1070,8 @@
    "last_mention": "2026-06-24",
    "count": 1,
    "source": "telegram",
-   "price": 4.19,
-   "change_pct": 1.95,
+   "price": 4.18,
+   "change_pct": -0.24,
    "currency": "USD",
    "yh": "TEF"
   },
@@ -1103,8 +1103,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "ASML.AS",
-   "price": 1499.0,
-   "change_pct": 0.33,
+   "price": 1518.0,
+   "change_pct": 1.27,
    "currency": "EUR"
   },
   "TSM": {
@@ -1135,8 +1135,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "NEM.DE",
-   "price": 60.6,
-   "change_pct": 7.26,
+   "price": 60.75,
+   "change_pct": 7.24,
    "currency": "EUR"
   },
   "GBF": {
@@ -1151,8 +1151,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "GBF.DE",
-   "price": 80.65,
-   "change_pct": -1.47,
+   "price": 80.6,
+   "change_pct": -1.23,
    "currency": "EUR"
   },
   "RACE": {
@@ -1167,8 +1167,8 @@
    "count": 1,
    "source": "telegram",
    "yh": "RACE.MI",
-   "price": 355.65,
-   "change_pct": 0.89,
+   "price": 354.9,
+   "change_pct": -0.22,
    "currency": "EUR"
   },
   "CMCSA": {
@@ -1248,7 +1248,7 @@
    "source": "telegram",
    "yh": "FER.MC",
    "price": 57.36,
-   "change_pct": 0.46,
+   "change_pct": 0.0,
    "currency": "EUR"
   },
   "EME": {
@@ -1268,5 +1268,5 @@
    "currency": "USD"
   }
  },
- "price_asof": "2026-08-09 06:52 UTC"
+ "price_asof": "2026-08-10 07:27 UTC"
 }
