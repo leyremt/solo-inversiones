@@ -1,5 +1,5 @@
 {
- "updated": "2026-08-16",
+ "updated": "2026-08-17",
  "companies": {
   "MU": {
    "ticker": "MU",
@@ -124,8 +124,8 @@
    "last_mention": "2026-06-04",
    "count": 1,
    "source": "whatsapp-seed",
-   "price": 16.21,
-   "change_pct": -21.84,
+   "price": 21.17,
+   "change_pct": 2.07,
    "currency": "USD",
    "yh": "QBTS"
   },
@@ -1070,8 +1070,8 @@
    "last_mention": "2026-06-24",
    "count": 1,
    "source": "telegram",
-   "price": 4.12,
-   "change_pct": -1.2,
+   "price": 4.2,
+   "change_pct": 0.96,
    "currency": "USD",
    "yh": "TEF"
   },
@@ -1268,5 +1268,5 @@
    "currency": "USD"
   }
  },
- "price_asof": "2026-08-16 06:35 UTC"
+ "price_asof": "2026-08-17 06:50 UTC"
 }
