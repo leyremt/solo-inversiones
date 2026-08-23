@@ -1,5 +1,5 @@
 {
- "updated": "2026-08-22",
+ "updated": "2026-08-23",
  "companies": {
   "MU": {
    "ticker": "MU",
@@ -494,8 +494,8 @@
    "source": "whatsapp-seed",
    "fh": "CMOPF",
    "yh": "CMOPF",
-   "price": 73.0,
-   "change_pct": 0.0,
+   "price": 72.04,
+   "change_pct": -1.32,
    "currency": "USD"
   },
   "PRY": {
@@ -1070,8 +1070,8 @@
    "last_mention": "2026-06-24",
    "count": 1,
    "source": "telegram",
-   "price": 4.26,
-   "change_pct": 1.43,
+   "price": 4.17,
+   "change_pct": -0.95,
    "currency": "USD",
    "yh": "TEF"
   },
@@ -1268,5 +1268,5 @@
    "currency": "USD"
   }
  },
- "price_asof": "2026-08-22 06:35 UTC"
+ "price_asof": "2026-08-23 06:36 UTC"
 }
