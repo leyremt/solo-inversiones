@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-03",
+ "updated": "2026-10-04",
  "companies": {
   "MU": {
    "ticker": "MU",
@@ -494,8 +494,8 @@
    "source": "whatsapp-seed",
    "fh": "CMOPF",
    "yh": "CMOPF",
-   "price": 65.5,
-   "change_pct": -3.68,
+   "price": 63.1,
+   "change_pct": -7.21,
    "currency": "USD"
   },
   "PRY": {
@@ -1412,5 +1412,5 @@
    "currency": "USD"
   }
  },
- "price_asof": "2026-10-03 11:05 UTC"
+ "price_asof": "2026-10-04 11:46 UTC"
 }
